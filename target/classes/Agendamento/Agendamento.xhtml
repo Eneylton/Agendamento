@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+
+	<script>
+		PrimeFaces.locales['pt'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Hoje',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 0,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só Horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo o Dia'
+		};
+	</script>
+	<style type="text/css">
+.cor1 .fc-content {
+	background: #13a016;
+	border: none;
+}
+
+.cor2 .fc-content {
+	background: #003399;
+	border: none;
+}
+
+.fc-event {
+	border: none !important;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight,
+	.ui-widget-header .ui-state-highlight {
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#c1c1c1),
+		to(#666)) !important;
+}
+
+
+
+.fc-slats .fc-minor td {
+    border-top-style: inherit !important;
+}
+
+.fc-event {
+    position: relative;
+    display: inline-block;
+    font-size: 0.95em !important;
+    line-height: 2.0;
+    border-radius: 3px;
+    border: 1px solid #5098e3 !important;
+    background-color: #1777da !important;
+    font-weight: normal;
+}
+
+
+.fc-toolbar {
+    text-align: center;
+    margin-bottom: 1em;
+    color: #fff;
+}
+
+</style>
+
+</h:head>
+<h:body>
+
+	<h:form>
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+		
+		
+
+	
+		<h:panelGrid columnClasses="value">
+			<h3 style="margin-top: 0">Agendamento</h3>
+
+			<p:schedule value="#{agendaBean.agendaCalendario}" locale="pt"
+				axisFormat="HH:mm" timeFormat="HH:mm" allDaySlot="false"
+				slotMinutes="10" view="agendaWeek" minTime="07:00:00"
+				maxTime="18:10:00" id="schEvento" widgetVar="modal"
+				timeZone="America/Sao_Paulo">
+				<p:ajax event="eventSelect"
+					listener="#{agendaBean.quandoSelecionado}" update="eventoDetalhe"
+					oncomplete="PF('caixaDialog').show();" />
+
+				<p:ajax event="dateSelect" listener="#{agendaBean.quandoNovo}"
+					update="eventoDetalhe" oncomplete="PF('caixaDialog').show();" />
+
+				<p:ajax event="eventMove" listener="#{agendaBean.quandoMovido}"
+					update="schEvento" />
+
+				<p:ajax event="eventResize"
+					listener="#{agendaBean.quandoRedimencionado}" update="schEvento" />
+
+
+
+			</p:schedule>
+
+			<p:dialog widgetVar="caixaDialog" header="Evento" resizable="false"
+				modal="true" showEffect="clip">
+				<p:outputPanel id="eventoDetalhe">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Titulo" />
+						<p:inputText value="#{agendaBean.agenda.titulo}" />
+
+						<p:outputLabel value="Status" />
+						<p:selectBooleanCheckbox value="#{agendaBean.agenda.status}" />
+
+
+						<p:outputLabel value="Descrição" />
+						<p:inputTextarea value="#{agendaBean.agenda.descricao}"
+							autoResize="true" />
+
+
+						<p:outputLabel value="Inicio" />
+						<p:calendar value="#{agendaBean.agenda.inicio}" 
+							pattern="dd/MM/yyyy - HH:mm" minHour="7" maxHour="18" maxMinute="30"/>
+						<p:outputLabel value="Fim" />
+						<p:calendar value="#{agendaBean.agenda.fim}" 
+							pattern="dd/MM/yyyy - HH:mm" minHour="7" maxHour="18" maxMinute="30" />
+
+					</h:panelGrid>
+					
+					<h:panelGrid columns="5">  
+    <h:outputText value="Start time"/>  
+   
+</h:panelGrid>  
+
+				</p:outputPanel>
+				<br />
+				<p:commandButton actionListener="#{agendaBean.salvar}"
+					value="Salvar" update="messages schEvento"
+					oncomplete="PF('caixaDialog').hide();" />
+
+			</p:dialog>
+
+
+
+		</h:panelGrid>
+
+	</h:form>
+</h:body>
+</html>

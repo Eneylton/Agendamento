@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:o="http://omnifaces.org/ui">
+
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+</h:head>
+<h:body>
+
+
+
+	<h:form id="frm">
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+
+		<p:spacer style="margin:5px 0px;" />
+
+		<h:inputHidden id="id" value="#{cadastroClienteBean.cliente.id}"
+			readonly="true" />
+
+		<p:toolbar style="margin-top: 20px">
+			<p:toolbarGroup>
+				<p:commandButton ajax="false" value="Cadastrar" icon="ui-icon-check"
+					action="#{cadastroClienteBean.salvar}" />
+			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+				<p:button value="Pesquisa" icon="ui-icon-search"
+					outcome="PesquisaCliente" />
+			</p:toolbarGroup>
+		</p:toolbar>
+
+
+		<p:panel id="basic" footer="Gerenciador de Conteúdo"
+			style="margin-bottom:20px">
+
+			<div class="row">
+
+
+
+				<div class="col-md-6">
+
+					<div class="control-group form-group">
+
+						<div class="controls">
+
+
+
+							<label>Nome:</label>
+							<p:inputText styleClass="form-control" id="Nome"
+								value="#{cadastroClienteBean.cliente.nome}" />
+							<p:spacer style="margin:5px 0px;" />
+							
+				
+								<label>Estado:</label>
+								<p:selectOneMenu id="estado" styleClass="form-control select2" 
+								style="width:50%;" >
+								<f:selectItem itemLabel="Selecione o Estado" />
+								<f:selectItems value="#{cadastroClienteBean.listarEstados}"
+									var="var" itemLabel="#{var.descricao}" itemValue="#{var}" />
+									<p:ajax listener="#{cadastroClienteBean.popular}" update=":frm:cidade" />
+						    	</p:selectOneMenu>
+
+								<p:spacer style="margin:5px 0px;" />
+								
+								<label>Cidades:</label>
+								<p:selectOneMenu id="cidade" styleClass="form-control select2" 
+								style="width:50%;" >
+								<f:selectItem itemLabel="Selecione a Cidade" />
+								<f:selectItems value="#{cadastroClienteBean.listarCidades}"
+									var="var" itemLabel="#{var.descricao}" itemValue="#{var}" />
+								
+						    	</p:selectOneMenu>
+
+								<p:spacer style="margin:5px 0px;" />
+								
+							</div>
+							
+
+						</div>
+					</div>
+
+
+				</div>
+
+			
+
+			<p:spacer />
+
+
+		</p:panel>
+
+	</h:form>
+</h:body>
+</html>

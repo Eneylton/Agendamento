@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:o="http://omnifaces.org/ui">
+	 
+	 <f:metadata>
+			<o:viewParam name="cliente" value="#{cadastroClienteBean.cliente}" />
+		</f:metadata>
+	 
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+
+
+
+	<h:form id="form">
+		<p:messages id="messages" closable="true">
+			<p:effect type="pulsate" event="load" delay="500" />
+		</p:messages>
+
+		<p:spacer style="margin:5px 0px;" />
+
+		<h:inputHidden id="id" value="#{cadastroEstadoBean.estado.id}"
+			readonly="true" />
+
+		<p:toolbar style="margin-top: 20px">
+			<p:toolbarGroup>
+				<p:commandButton ajax="false" value="Cadastrar" icon="ui-icon-check"
+					action="#{cadastroEstadoBean.salvar}" />
+			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+				<p:button value="Pesquisa" icon="ui-icon-search"
+					outcome="PesquisaEstado" />
+			</p:toolbarGroup>
+		</p:toolbar>
+
+
+		<p:panel id="basic" footer="Gerenciador de Conteúdo"
+			style="margin-bottom:20px">
+
+			<div class="row">
+
+
+
+				<div class="col-md-6">
+
+					<div class="control-group form-group">
+
+						<div>
+
+
+
+							<label>Descrição:</label>
+							<p:inputText styleClass="form-control"
+								id="desc" value="#{cadastroEstadoBean.estado.descricao}" />
+							<p:spacer style="margin:5px 0px;" />
+
+
+
+
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+			</div>
+
+
+
+
+
+
+			<p:spacer />
+
+
+		</p:panel>
+
+	</h:form>
+</h:body>
+</html>
